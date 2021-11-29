@@ -1,26 +1,56 @@
-import React, { useEffect } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 
-export default function Search() {
-  // const [breeds, setBreeds] = useState(null);
+class SearchContainer extends Component {
+  state = {
+    result: {},
+    search: ''
+  };
 
-  useEffect(() => {
-    getBreeds();
-  })
+  componentDidMount() {
+    axios.get('https://dog.ceo/api/breeds/list/all')
+    .then(Response => this.setState({ result: Response.data}))
+  };
 
-  async function getBreeds() {
-    try {
-      const response = await axios.get('https://dog.ceo/api/breeds/list/all');
-      console.log(response.data);
-    } catch(error) {
-      console.error(error)
-    }
+  render() {
+    return(
+      <h1>
+        Dog Breeds
+        {console.log(this.state.result)}
+      </h1>
+    )
   }
+};
 
-  return(
-    <div>
-      <h1> Dog Breeds</h1>
-      </div>
-  )
-}
+export default SearchContainer;
+
+// export default function Search() {
+
+//   const [breeds, setBreeds] = useState('');
+
+//   useEffect(() => {
+//     getBreeds()
+//     .then(breedData => {
+//       setBreeds(breedData)
+//     });
+
+//     async function getBreeds() {
+//       const response = await axios.get('https://dog.ceo/api/breeds/list/all');
+//       const breedData = response.data.message;
+//       setBreeds(breedData)
+//     }
+
+//   })
+
+
+//   return(
+//     <div>
+//       <h1> Dog Breeds</h1>
+//       <ul>
+//         {breeds.map(breedData => <li key={breeds.breeds}>{breeds.data}</li>)}
+//       </ul>
+    
+//       </div>
+//   )
+// }
 
